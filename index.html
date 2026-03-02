@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workspace</title>
+  <style>
+    :root { --gap: 16px; --tile: 140px; }
+
+    /* Fond photo */
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:#eef3ff;
+      background: url("stgs.jpg") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* Filtre pour lisibilité (tu peux ajuster l'opacité) */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,.45);
+      backdrop-filter: blur(1px);
+      z-index:-1;
+    }
+
+    .wrap{
+      padding: 22px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom: 14px;
+    }
+
+    h1{
+      margin:0;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    .sub{
+      margin: 6px 0 0;
+      font-size: 13px;
+      opacity: .85;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(var(--tile), 1fr));
+      gap: var(--gap);
+      margin-top: 14px;
+    }
+
+    a.tile{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:16px 12px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.18);
+      text-decoration:none;
+      color:inherit;
+      user-select:none;
+      transition: transform .08s ease, background .08s ease;
+    }
+    a.tile:hover{
+      background: rgba(255,255,255,.16);
+      transform: translateY(-1px);
+    }
+
+    .icon{
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.14);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 26px;
+    }
+
+    .label{
+      font-size: 13px;
+      text-align:center;
+      line-height: 1.2;
+      font-weight: 600;
+    }
+
+    .hint{
+      margin-top: 14px;
+      font-size: 12px;
+      opacity: .75;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Workspace</h1>
+        <div class="sub">Accès rapide à mes apps Google</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <a class="tile" href="https://mail.google.com/" target="_blank" rel="noopener">
+        <div class="icon">✉️</div>
+        <div class="label">Mail</div>
+      </a>
+
+      <a class="tile" href="https://contacts.google.com/" target="_blank" rel="noopener">
+        <div class="icon">👥</div>
+        <div class="label">Contacts</div>
+      </a>
+
+      <a class="tile" href="https://calendar.google.com/" target="_blank" rel="noopener">
+        <div class="icon">📅</div>
+        <div class="label">Calendar</div>
+      </a>
+
+      <a class="tile" href="https://drive.google.com/" target="_blank" rel="noopener">
+        <div class="icon">📁</div>
+        <div class="label">Drive</div>
+      </a>
+
+      <a class="tile" href="https://tasks.google.com/" target="_blank" rel="noopener">
+        <div class="icon">✅</div>
+        <div class="label">Tasks</div>
+      </a>
+    </div>
+
+    <div class="hint">
+      Astuce : tu peux changer les emojis, ajouter des tuiles, ou ajuster le filtre (rgba) si la photo est trop claire.
+    </div>
+  </div>
+</body>
+</html>
