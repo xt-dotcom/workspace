@@ -1,150 +1,378 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Workspace</title>
-  <style>
-    :root { --gap: 16px; --tile: 140px; }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    /* Fond photo */
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:#eef3ff;
-      background: url("stgs.jpg") no-repeat center center fixed;
-      background-size: cover;
-    }
+<!-- ===== TODO 1 : NOM DE L'ONGLET =====
+Remplacer "Bankinsurance" par le nom du lanceur.
+Exemples : Navimeteo / Santé / Admin / Services
+C'est le nom visible dans l'onglet du navigateur.
+===== FIN TODO 1 ===== -->
+<title>Google Workspace</title>
 
-    /* Filtre pour lisibilité (tu peux ajuster l'opacité) */
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.45);
-      backdrop-filter: blur(1px);
-      z-index:-1;
-    }
+<style>
 
-    .wrap{
-      padding: 22px;
-      max-width: 980px;
-      margin: 0 auto;
-    }
+/* NEPASMODIFIER : design général */
 
-    .top{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom: 14px;
-    }
+:root{
+  --text:#0b1f3a;
+  --muted:rgba(11,31,58,.72);
 
-    h1{
-      margin:0;
-      font-size: 18px;
-      font-weight: 700;
-      letter-spacing: .2px;
-    }
+  --tile-bg:rgba(255,255,255,.26);
+  --tile-bg-hover:rgba(255,255,255,.34);
+  --tile-border:rgba(0,25,60,.12);
 
-    .sub{
-      margin: 6px 0 0;
-      font-size: 13px;
-      opacity: .85;
-    }
+  --tile-w:110px;
+  --tile-h:110px;
+  --gap:18px;
+  --radius:0px;
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fill, minmax(var(--tile), 1fr));
-      gap: var(--gap);
-      margin-top: 14px;
-    }
+  --shadow-tile:0 10px 22px rgba(0,0,0,.14);
+  --shadow-tile-hover:0 16px 32px rgba(0,0,0,.18);
 
-    a.tile{
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:16px 12px;
-      border-radius: 18px;
-      background: rgba(255,255,255,.10);
-      border: 1px solid rgba(255,255,255,.18);
-      text-decoration:none;
-      color:inherit;
-      user-select:none;
-      transition: transform .08s ease, background .08s ease;
-    }
-    a.tile:hover{
-      background: rgba(255,255,255,.16);
-      transform: translateY(-1px);
-    }
+  --pill-bg:rgba(255,255,255,.38);
+  --pill-border:rgba(0,25,60,.15);
+  --pill-text:#07182d;
+}
 
-    .icon{
-      width: 58px;
-      height: 58px;
-      border-radius: 16px;
-      background: rgba(255,255,255,.14);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size: 26px;
-    }
+/* ===== TODO 2 : OPTIONNEL - TAILLE DES TUILES =====
+Si tu veux changer la taille des tuiles, modifie uniquement :
+--tile-w
+--tile-h
+--gap
+--radius
+Sinon ne touche à rien.
+===== FIN TODO 2 ===== */
 
-    .label{
-      font-size: 13px;
-      text-align:center;
-      line-height: 1.2;
-      font-weight: 600;
-    }
+*{box-sizing:border-box}
+html,body{height:100%}
 
-    .hint{
-      margin-top: 14px;
-      font-size: 12px;
-      opacity: .75;
-    }
-  </style>
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+  color:var(--text);
+
+  /* ===== TODO 3 : IMAGE DE FOND =====
+  Remplacer "google-workspace.jpg" par ton image de fond.
+  Exemple : navimeteo.jpeg
+  Le fichier doit être dans le même dossier que index.html.
+  ===== FIN TODO 3 ===== */
+
+  background:url("google-workspace.jpg") no-repeat center center fixed;
+  background-size:cover;
+  overflow-x:hidden;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(900px 500px at 20% 10%, rgba(255,255,255,.14), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.05));
+  z-index:-1;
+}
+
+.wrap{
+  max-width:1180px;
+  margin:0 auto;
+  padding:38px 26px 44px;
+}
+
+h1{
+  margin:0;
+  font-size:28px;
+  font-weight:900;
+  color:#07182d;
+}
+
+.subtitle{
+  margin-top:6px;
+  font-size:14px;
+  font-weight:650;
+  color:var(--muted);
+}
+
+.dash{
+  margin-top:12px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+.pill{
+  display:inline-flex;
+  align-items:center;
+  padding:8px 12px;
+  border-radius:999px;
+  background:var(--pill-bg);
+  border:1px solid var(--pill-border);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  font-size:13px;
+  font-weight:800;
+  color:var(--pill-text);
+  box-shadow:0 8px 18px rgba(0,0,0,.12);
+  white-space:nowrap;
+}
+
+.section{margin-top:26px}
+
+.section h2{
+  margin:0 0 12px;
+  font-size:16px;
+  font-weight:850;
+  color:#07182d;
+}
+
+.grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--gap);
+}
+
+.tile{
+  width:var(--tile-w);
+  height:var(--tile-h);
+  border-radius:var(--radius);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:14px;
+  background:var(--tile-bg);
+  border:1px solid var(--tile-border);
+  box-shadow:var(--shadow-tile);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  text-decoration:none;
+  transition:.18s ease;
+  position:relative;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tile:hover{
+  transform:translateY(-3px);
+  background:var(--tile-bg-hover);
+  box-shadow:var(--shadow-tile-hover);
+}
+
+.tile img{
+  max-width:100%;
+  max-height:70px;
+  object-fit:contain;
+  filter:drop-shadow(0 8px 14px rgba(0,0,0,.16));
+}
+
+.tile[data-tip]::after{
+  content: attr(data-tip);
+  position:absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(10,20,35,.82);
+  color: rgba(255,255,255,.96);
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: .2px;
+  opacity: 0;
+  pointer-events:none;
+  transition: opacity .14s ease, transform .14s ease;
+}
+
+.tile[data-tip]::before{
+  content:"";
+  position:absolute;
+  left: 50%;
+  bottom: calc(100% + 4px);
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: rgba(10,20,35,.82);
+  opacity: 0;
+  pointer-events:none;
+  transition: opacity .14s ease, transform .14s ease;
+}
+
+.tile:hover::after,
+.tile:hover::before{
+  opacity:1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+@media(max-width:720px){
+  :root{--tile-w:150px;--tile-h:104px}
+}
+
+@media(max-width:480px){
+  :root{--tile-w:100%;--tile-h:96px}
+  .tile{width:100%}
+}
+
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div>
-        <h1>Workspace</h1>
-        <div class="sub">Accès rapide à mes apps Google</div>
-      </div>
-    </div>
 
-    <div class="grid">
-      <a class="tile" href="https://mail.google.com/" target="_blank" rel="noopener">
-        <div class="icon">✉️</div>
-        <div class="label">Mail</div>
-      </a>
+<div class="wrap">
 
-      <a class="tile" href="https://contacts.google.com/" target="_blank" rel="noopener">
-        <div class="icon">👥</div>
-        <div class="label">Contacts</div>
-      </a>
+<header>
 
-      <a class="tile" href="https://calendar.google.com/" target="_blank" rel="noopener">
-        <div class="icon">📅</div>
-        <div class="label">Calendar</div>
-      </a>
+<!-- ===== TODO 4 : NOM DU LAUNCHER ===== -->
+<h1>Google Workspace</h1>
+<!-- ===== FIN TODO 4 ===== -->
 
-      <a class="tile" href="https://drive.google.com/" target="_blank" rel="noopener">
-        <div class="icon">📁</div>
-        <div class="label">Drive</div>
-      </a>
+<!-- ===== TODO 5 : SOUS-TITRE ===== -->
+<div class="subtitle">Mail • Drive • Calendar • Tasks • etc...</div>
+<!-- ===== FIN TODO 5 ===== -->
 
-      <a class="tile" href="https://tasks.google.com/" target="_blank" rel="noopener">
-        <div class="icon">✅</div>
-        <div class="label">Tasks</div>
-      </a>
-    </div>
+<div class="dash">
+<div class="pill" id="time">🕒 --:--</div>
+<div class="pill" id="date">📅 --</div>
+<div class="pill" id="weather">🌍 Autoriser localisation</div>
+</div>
 
-    <div class="hint">
-      Astuce : tu peux changer les emojis, ajouter des tuiles, ou ajuster le filtre (rgba) si la photo est trop claire.
-    </div>
-  </div>
+</header>
+
+
+<!-- ===== TODO SECTION =====
+Renommer la section si nécessaire
+===== FIN TODO SECTION ===== -->
+
+<section class="section" aria-label="Apps">
+<h2>Plate-formes</h2>
+
+<div class="grid">
+
+  <a class="tile"
+href="https://drive.google.com/drive/u/0/home?lfhs=2"
+target="_blank"
+aria-label="Drive"
+data-tip="Drive">
+<img src="drive.png" alt="Drive">
+</a>
+
+<a class="tile"
+href="https://mail.google.com/mail/u/0/#inbox"
+target="_blank"
+aria-label="Gmail"
+data-tip="Gmail">
+<img src="gmail.png" alt="Gmail">
+</a>
+
+<a class="tile"
+href="https://tasks.google.com/tasks/"
+target="_blank"
+aria-label="Tasks"
+data-tip="Tasks">
+<img src="tasks.png" alt="Tasks">
+</a>
+
+<a class="tile"
+href="https://calendar.google.com/calendar/u/0/r?pli=1"
+target="_blank"
+aria-label="Calendar"
+data-tip="Calendar">
+<img src="calendar.png" alt="Calendar">
+</a>
+
+<a class="tile"
+href="https://keep.google.com/u/0/"
+target="_blank"
+aria-label="Keep"
+data-tip="Keep">
+<img src="keep.png" alt="Keep">
+</a>
+
+  <a class="tile"
+href="https://www.google.fr/maps/"
+target="_blank"
+aria-label="Maps"
+data-tip="Maps">
+<img src="maps.png" alt="Maps">
+</a>
+
+      <a class="tile"
+href="https://contacts.google.com/?lfhs=2"
+target="_blank"
+aria-label="Contacts"
+data-tip="Contacts">
+<img src="contacts.png" alt="Contacts">
+</a>
+
+    <a class="tile"
+href="https://photos.google.com/?lfhs=2"
+target="_blank"
+aria-label="Photos"
+data-tip="Photos">
+<img src="photos.png" alt="Photos">
+</a>
+
+</div>
+</section>
+
+<script>
+
+const fmtTime=new Intl.DateTimeFormat('fr-FR',{hour:'2-digit',minute:'2-digit'});
+const fmtDate=new Intl.DateTimeFormat('fr-FR',{weekday:'long',day:'2-digit',month:'long'});
+
+function updateTime(){
+const now=new Date();
+document.getElementById("time").textContent="🕒 "+fmtTime.format(now);
+document.getElementById("date").textContent="📅 "+fmtDate.format(now);
+}
+
+updateTime();
+setInterval(updateTime,15000);
+
+function iconFromCode(c){
+if(c===0) return "☀️";
+if(c<=3) return "🌤️";
+if(c===45||c===48) return "🌫️";
+if((c>=51&&c<=67)||(c>=80&&c<=82)) return "🌧️";
+if(c>=71&&c<=77) return "🌨️";
+if(c>=95) return "⛈️";
+return "🌡️";
+}
+
+async function getCity(lat,lon){
+try{
+const r1=await fetch(`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&language=fr`);
+const j1=await r1.json();
+const n=j1?.results?.[0]?.name;
+if(n) return n;
+}catch{}
+
+try{
+const r2=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}&accept-language=fr`);
+const j2=await r2.json();
+const a=j2?.address||{};
+return a.city||a.town||a.village||a.county||null;
+}catch{}
+
+return null;
+}
+
+async function getWeather(lat,lon){
+const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&windspeed_unit=kmh`);
+const j=await r.json();
+const cw=j.current_weather;
+const city=await getCity(lat,lon);
+const icon=iconFromCode(cw.weathercode);
+const text=`${icon} ${city?city+" • ":""}${Math.round(cw.temperature)}°C • Vent ${Math.round(cw.windspeed)} km/h`;
+document.getElementById("weather").textContent=text;
+}
+
+if(navigator.geolocation){
+navigator.geolocation.getCurrentPosition(
+pos=>getWeather(pos.coords.latitude,pos.coords.longitude),
+()=>document.getElementById("weather").textContent="📍 Localisation refusée"
+);
+}
+
+</script>
+
 </body>
 </html>
